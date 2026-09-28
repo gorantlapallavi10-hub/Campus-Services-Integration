@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Lost & Found: anyone signed in can read and add reports.
+    match /lost_found/{itemId} {
+      allow read: if true;
+      allow create: if true;   // change to: request.auth != null  after login is integrated
+      allow update, delete: if false;
+    }
+  }
+}
